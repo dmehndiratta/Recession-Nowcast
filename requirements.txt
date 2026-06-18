@@ -1,0 +1,13 @@
+# Recession-Nowcast — pinned dependencies (verified on Python 3.11)
+numpy==1.26.4
+pandas==2.2.3
+scipy==1.13.1
+scikit-learn==1.5.2
+statsmodels==0.14.6      # DynamicFactorMQ (mixed-frequency state space), MarkovRegression
+xgboost==2.1.4           # nonlinear comparator on factors
+requests==2.34.2
+pyarrow==17.0.0          # parquet engine for interim/processed panels
+pyyaml==6.0.3
+matplotlib==3.9.4
+tqdm==4.68.2
+pytest==8.3.3            # tests/ (no-look-ahead, label join, JSON schema, reproducibility)

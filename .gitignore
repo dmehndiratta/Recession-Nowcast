@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.env
+*.egg-info/
+.pytest_cache/
+pipeline_run*.log
+
+# Data: raw + interim are reproducible / large -> gitignored.
+# processed/ and facts/ hold small committed artefacts (--offline rebuild).
+data/raw/
+data/interim/
+*.parquet
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Matplotlib / misc
+*.tmp

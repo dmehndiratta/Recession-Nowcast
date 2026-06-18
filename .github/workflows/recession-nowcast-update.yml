@@ -1,0 +1,97 @@
+name: recession-nowcast-update
+
+# Living analysis: refresh weekly (Mondays 11:00 UTC, after US Monday data) and
+# on demand. Job A regenerates JSON inside this repo; Job B pushes the static
+# payload into the private Website repo (Pattern A; see SETUP.md §3).
+
+on:
+  schedule:
+    - cron: '0 11 * * 1'
+  workflow_dispatch:
+    inputs:
+      export_only:
+        description: 'Run export stage only (skip fetch/model)'
+        type: boolean
+        default: false
+  push:
+    branches: [main]
+    paths:
+      - 'data/manual/**'
+      - 'pipeline/**'
+      - 'run_pipeline.py'
+      - 'config.yaml'
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - run: pip install -r requirements.txt
+
+      - name: Run pipeline
+        env:
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+        run: |
+          if [ "${{ inputs.export_only }}" = "true" ]; then
+            python run_pipeline.py --export-only
+          else
+            python run_pipeline.py
+          fi
+
+      - name: Validate JSON is browser-parseable (no NaN/Infinity)
+        run: |
+          python - <<'PY'
+          import json, glob, sys
+          def reject(x): raise ValueError(f"non-finite token: {x}")
+          bad = 0
+          for f in glob.glob("site/data/*.json"):
+              try:
+                  json.load(open(f, encoding="utf-8"), parse_constant=reject)
+              except Exception as e:
+                  print(f"INVALID {f}: {e}"); bad += 1
+          sys.exit(1 if bad else 0)
+          PY
+
+      - name: Commit refreshed artefacts
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add site/data data/processed data/facts
+          git diff --staged --quiet || git commit -m "chore: weekly recession-nowcast refresh"
+          git push
+
+  sync-website:
+    needs: update
+    if: ${{ always() && needs.update.result != 'failure' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Checkout Website (private) via PAT
+        uses: actions/checkout@v4
+        with:
+          repository: dmehndiratta/Website
+          token: ${{ secrets.WEBSITE_REPO_TOKEN }}
+          path: website
+
+      - name: Copy static payload into public/recession-nowcasting/
+        run: |
+          mkdir -p website/public/recession-nowcasting/data
+          cp site/data/*.json       website/public/recession-nowcasting/data/
+          cp site/dashboard.html    website/public/recession-nowcasting/
+          cp site/report.html       website/public/recession-nowcasting/
+
+      - name: Commit & push to Website (triggers Cloudflare Pages)
+        run: |
+          cd website
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/recession-nowcasting
+          git diff --staged --quiet || git commit -m "data: refresh recession-nowcasting"
+          git push

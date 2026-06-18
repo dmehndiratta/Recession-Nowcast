@@ -1,0 +1,6 @@
+{
+  "data_mode": "live",
+  "reason": "Fetched 28/28 FRED series via FRED API.",
+  "vintage_date": "2026-06-16",
+  "n_series_ok": 28
+}

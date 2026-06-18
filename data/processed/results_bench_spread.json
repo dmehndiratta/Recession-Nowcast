@@ -1,0 +1,32 @@
+{
+  "series": "T10Y3M",
+  "horizons": {
+    "0": {
+      "const": -1.6435431949767625,
+      "spread_coef": 0.16977300718016367,
+      "spread_pvalue": 0.0126484609104395,
+      "pseudo_r2": 0.02057517598609393,
+      "n": 534,
+      "in_sample_auc": 0.5982131154703133,
+      "inverted_curve_signal": false
+    },
+    "3": {
+      "const": -1.345547662543966,
+      "spread_coef": -0.02678908402246239,
+      "spread_pvalue": 0.6797210161404492,
+      "pseudo_r2": 0.0005603611945691478,
+      "n": 531,
+      "in_sample_auc": 0.5356776180698152,
+      "inverted_curve_signal": true
+    },
+    "12": {
+      "const": -1.0126615717834704,
+      "spread_coef": -0.4473668316125358,
+      "spread_pvalue": 2.3989398965791733e-08,
+      "pseudo_r2": 0.1413249375552056,
+      "n": 522,
+      "in_sample_auc": 0.8121284865112025,
+      "inverted_curve_signal": true
+    }
+  }
+}

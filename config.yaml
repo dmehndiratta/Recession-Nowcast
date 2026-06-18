@@ -1,0 +1,94 @@
+# config.yaml — single source of truth for series, horizons, seed, eval window.
+# Numbers in report/dashboard must trace back to JSON produced under these settings.
+
+seed: 20260615
+
+# Pseudo-real-time backtest window. Vintage-keyed evaluation starts here.
+# FRED-MD real-time vintages begin 1999-08; pre-1999 evaluation uses final
+# data ("pseudo-vintage") and is labelled as such (see plan open question 3).
+eval:
+  start: "1985-01"          # expanding-window OOS evaluation start (final-data path)
+  vintage_start: "1999-08"  # first month with a genuine FRED-MD vintage
+  horizons: [0, 3]          # h=0 nowcast; h=3 short forecast (months ahead)
+  min_train_months: 240     # require >= 20y of history before first OOS forecast
+
+factors:
+  n_factors: 3              # small number of dynamic factors from the monthly panel
+  max_em_iter: 50
+
+bootstrap:
+  n_boot: 1000              # block / stationary bootstrap replications for CIs
+  block_len: 24             # months per block (serial-dependence respecting)
+
+uncertainty:
+  n_mc: 500                 # Monte Carlo draws over factor-state + parameter uncertainty
+  band: [0.05, 0.95]        # reported predictive band quantiles
+
+covid:
+  start: "2020-02"
+  end: "2020-08"            # months flagged as the COVID outlier window
+
+# ---------------------------------------------------------------------------
+# US monthly panel. FRED IDs with FRED-MD stationarity transform codes (tcode):
+#   1 = level, 2 = Dx, 3 = D2x, 4 = log, 5 = Dlog, 6 = D2log, 7 = D(x_t/x_{t-1})
+# These mirror the FRED-MD group structure (output, labour, housing, consumption,
+# money/credit, rates/spreads, prices, stocks, sentiment) using keyless FRED
+# series so the panel is reproducible without the bulk FRED-MD CSV.
+# ---------------------------------------------------------------------------
+us:
+  label_series: "USREC"            # NBER-based recession indicator (monthly 0/1)
+  benchmarks:
+    term_spread: "T10Y3M"          # 10y-3m, the Estrella-Mishkin probit input
+    term_spread_alt: "T10Y2Y"
+    sahm_realtime: "SAHMREALTIME"  # real-time Sahm rule trigger
+    fed_smoothed_prob: "RECPROUSM156N"  # Chauvet-Piger published reference line
+  panel:
+    # output & income
+    - {id: RPI,        tcode: 5, group: output}
+    - {id: W875RX1,    tcode: 5, group: output}
+    - {id: INDPRO,     tcode: 5, group: output}
+    - {id: CUMFNS,     tcode: 2, group: output}
+    # labour
+    - {id: UNRATE,     tcode: 2, group: labour}
+    - {id: PAYEMS,     tcode: 5, group: labour}
+    - {id: MANEMP,     tcode: 5, group: labour}
+    - {id: CES0600000007, tcode: 1, group: labour}   # avg weekly hours, goods
+    - {id: ICSA,       tcode: 5, group: labour}       # initial claims (weekly->monthly)
+    # housing
+    - {id: HOUST,      tcode: 4, group: housing}
+    - {id: PERMIT,     tcode: 4, group: housing}
+    # consumption / orders / sales
+    - {id: DPCERA3M086SBEA, tcode: 5, group: consumption}
+    - {id: RSAFS,      tcode: 5, group: consumption}
+    # money & credit
+    - {id: M2REAL,     tcode: 5, group: money}
+    - {id: REALLN,     tcode: 6, group: money}        # real estate loans
+    # interest rates & spreads
+    - {id: FEDFUNDS,   tcode: 2, group: rates}
+    - {id: GS10,       tcode: 2, group: rates}
+    - {id: BAA,        tcode: 2, group: rates}
+    - {id: AAA,        tcode: 2, group: rates}
+    # prices
+    - {id: CPIAUCSL,   tcode: 6, group: prices}
+    - {id: PPIACO,     tcode: 6, group: prices}
+    - {id: WTISPLC,    tcode: 6, group: prices}        # crude oil price
+    # stock market & sentiment
+    - {id: UMCSENT,    tcode: 2, group: sentiment}
+
+# ---------------------------------------------------------------------------
+# Canada. Label = C.D. Howe chronology (committed CSV). Monthly indicators from
+# StatCan WDS + Bank of Canada Valet; financial spreads from FRED where Canadian
+# series exist keyless.
+# ---------------------------------------------------------------------------
+ca:
+  label_csv: "data/manual/cdhowe_recessions.csv"
+  benchmarks:
+    term_spread_fred: "T10YIE"      # placeholder; replaced by BoC-derived CA spread
+  statcan_tables:
+    gdp_monthly: "36-10-0434-01"    # real GDP by industry (monthly)
+    gdp_vintage: "36-10-0491-01"    # real-time / vintage GDP releases
+    lfs_unrate: "14-10-0287-01"     # Labour Force Survey, unemployment rate
+    cpi: "18-10-0004-01"            # CPI monthly
+  boc_series:
+    overnight: "V39079"             # BoC overnight rate (Valet)
+    gov_10y: "BD.CDN.10YR.DQ.YLD"   # 10-year GoC benchmark yield

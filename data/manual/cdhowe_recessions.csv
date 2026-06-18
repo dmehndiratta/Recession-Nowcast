@@ -1,0 +1,5 @@
+peak,trough,granularity,label,source_url,note
+1981-07,1982-10,quarter,1981-82 recession,https://cdhowe.org/council/business-cycle-council/,"Early-1980s recession; council chronology (quarter-dated, represented as months)."
+1990-04,1992-04,quarter,1990-92 recession,https://cdhowe.org/council/business-cycle-council/,"Early-1990s recession; council chronology (quarter-dated, represented as months)."
+2008-11,2009-05,month,2008-09 recession,https://cdhowe.org/council/business-cycle-council/,"Global financial crisis; council monthly ruling: peak Nov 2008, trough May 2009."
+2020-03,2020-04,month,COVID recession,https://cdhowe.org/council/business-cycle-council/,"COVID-19 shock; council monthly ruling: peak Mar 2020, trough Apr 2020 (shortest on record)."

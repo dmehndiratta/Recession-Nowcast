@@ -1,0 +1,22 @@
+{
+  "n_features": 69,
+  "n_selected": 14,
+  "top_selected": {
+    "MANEMP_l0": -1.683,
+    "INDPRO_l0": -0.664,
+    "FEDFUNDS_l0": -0.567,
+    "FEDFUNDS_l2": -0.5503,
+    "PERMIT_l0": -0.5245,
+    "BAA_l1": 0.1378,
+    "FEDFUNDS_l1": -0.1343,
+    "CUMFNS_l1": -0.1034,
+    "INDPRO_l2": -0.0884,
+    "BAA_l2": 0.0613,
+    "MANEMP_l1": -0.0605,
+    "CUMFNS_l0": -0.0574,
+    "W875RX1_l0": -0.0295,
+    "CES0600000007_l0": -0.0129
+  },
+  "in_sample_auc": 0.8400631265729501,
+  "in_sample_brier": 0.2996467557629708
+}

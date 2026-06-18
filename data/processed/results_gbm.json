@@ -1,0 +1,13 @@
+{
+  "estimator": "XGBClassifier",
+  "feature_importance": {
+    "F1": 0.635,
+    "sahm": 0.1889,
+    "spread": 0.0872,
+    "F2": 0.0537,
+    "F3": 0.0352
+  },
+  "in_sample_auc": 0.8562984051502385,
+  "in_sample_brier": 0.11699054586125236,
+  "note": "In-sample only; OOS skill is reported by backtest.py."
+}
