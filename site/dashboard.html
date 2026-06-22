@@ -4,7 +4,8 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Recession Nowcast — live probability dashboard</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.35.2/plotly.min.js"></script>
+<script src="https://cdn.plot.ly/plotly-3.6.0.min.js" crossorigin="anonymous"
+  onerror="document.getElementById('banner').style.display='block';document.getElementById('banner').textContent='Plotly failed to load (CDN unreachable). Try refreshing or opening full screen.'"></script>
 <style>
   :root{--bg:#0f1419;--panel:#171d26;--ink:#e7edf3;--mut:#9aa7b4;--line:#283341;
         --acc:#4ea1ff;--rec:#c0392b;--good:#2ecc71;--warn:#f1c40f;}
@@ -107,7 +108,10 @@ const LAYOUT = {paper_bgcolor:'#171d26',plot_bgcolor:'#171d26',font:{color:'#e7e
   yaxis:{gridcolor:'#283341'}};
 let FACTS=null;
 
-async function loadJSON(p){const r=await fetch(p,{cache:'no-store'});if(!r.ok)throw new Error(p);return r.json();}
+function dataURL(name){
+  try{return new URL('./data/'+name,document.baseURI).href;}catch(e){return './data/'+name;}
+}
+async function loadJSON(p){const r=await fetch(p);if(!r.ok)throw new Error(p);return r.json();}
 
 function recessionSpans(target, y){
   const spans=[]; let start=null;
@@ -191,7 +195,7 @@ function drawVF(d){
 }
 
 async function render(country){
-  const d = await loadJSON(`./data/nowcast_${country}.json`);
+  const d = await loadJSON(dataURL(`nowcast_${country}.json`));
   document.querySelectorAll('#country button').forEach(b=>b.classList.toggle('on',b.dataset.c===country));
   document.getElementById('asof').textContent =
     `eval ${d.eval_start} → ${d.eval_end} · base rate ${(d.base_rate*100).toFixed(1)}% · horizon h=${d.horizon}`;
@@ -206,7 +210,7 @@ async function render(country){
 }
 
 async function boot(){
-  try{ FACTS = await loadJSON('./data/facts.json'); }catch(e){}
+  try{ FACTS = await loadJSON(dataURL('facts.json')); }catch(e){}
   if(FACTS && FACTS.data_mode==='demo-synthetic'){
     const b=document.getElementById('banner');b.style.display='block';
     b.innerHTML='<b>Demo mode (synthetic data).</b> Live data endpoints were unreachable, '
