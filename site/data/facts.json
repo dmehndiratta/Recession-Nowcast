@@ -1,6 +1,6 @@
 {
   "title": "Recession Nowcast",
-  "last_updated": "2026-06-22T13:51:53Z",
+  "last_updated": "2026-06-22T15:50:34Z",
   "data_mode": "live",
   "data_mode_reason": "Fetched 28/28 FRED series via FRED API.",
   "seed": 20260615,
@@ -6172,23 +6172,23 @@
       "n_features": 69,
       "n_selected": 14,
       "top_selected": {
-        "MANEMP_l0": -1.6824,
-        "INDPRO_l0": -0.6632,
-        "FEDFUNDS_l0": -0.5669,
+        "MANEMP_l0": -1.683,
+        "INDPRO_l0": -0.6649,
+        "FEDFUNDS_l0": -0.567,
         "FEDFUNDS_l2": -0.5503,
-        "PERMIT_l0": -0.5245,
-        "BAA_l1": 0.1377,
-        "FEDFUNDS_l1": -0.1344,
-        "CUMFNS_l1": -0.1039,
-        "INDPRO_l2": -0.0887,
+        "PERMIT_l0": -0.5244,
+        "BAA_l1": 0.1378,
+        "FEDFUNDS_l1": -0.1343,
+        "CUMFNS_l1": -0.1038,
+        "INDPRO_l2": -0.0885,
         "BAA_l2": 0.0614,
-        "MANEMP_l1": -0.06,
-        "CUMFNS_l0": -0.0581,
+        "MANEMP_l1": -0.0599,
+        "CUMFNS_l0": -0.0563,
         "W875RX1_l0": -0.0295,
-        "CES0600000007_l0": -0.0134
+        "CES0600000007_l0": -0.0132
       },
-      "in_sample_auc": 0.840240409349407,
-      "in_sample_brier": 0.29983411685840716
+      "in_sample_auc": 0.8401708866919729,
+      "in_sample_brier": 0.2997188681129799
     },
     "gbm": {
       "estimator": "XGBClassifier",
