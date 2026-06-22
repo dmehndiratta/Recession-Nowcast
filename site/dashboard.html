@@ -133,9 +133,9 @@ function drawGauge(cur){
     {paper_bgcolor:'#171d26',font:{color:'#e7edf3'},margin:{l:18,r:18,t:6,b:6},height:170,width:240},
     {displayModeBar:false});
   document.getElementById('probnum').textContent = cur? (cur.point*100).toFixed(1)+'%':'—';
-  document.getElementById('probband').textContent = cur?
+  document.getElementById('probband').textContent = (cur && cur.lo!=null && cur.hi!=null)?
      `90% band: ${(cur.lo*100).toFixed(1)}% – ${(cur.hi*100).toFixed(1)}%`:'';
-  document.getElementById('probmonth').textContent = cur? `as of target ${cur.month}`:'';
+  document.getElementById('probmonth').textContent = cur? `as of ${cur.month}`:'';
 }
 
 function drawHist(d){
@@ -204,9 +204,11 @@ async function render(country){
   drawReliab(d);
   drawScores(d);
   drawVF(d);
-  document.getElementById('gaugehint').textContent = d.current?
+  document.getElementById('gaugehint').textContent =
+    (d.current && d.current.lo!=null)?
     'Headline DFM nowcast with 5–95% predictive band.' :
-    'Current-month band requires the uncertainty stage (US).';
+    d.current? 'Latest DFM backtest reading (no uncertainty band for this country).' :
+    'Current-month reading unavailable.';
 }
 
 async function boot(){

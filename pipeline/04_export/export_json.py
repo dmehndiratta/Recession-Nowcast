@@ -77,6 +77,12 @@ def build_country(country: str, cfg) -> dict:
         if unc:
             out["uncertainty"] = unc
             out["current"] = unc.get("current")
+    else:
+        # Derive current estimate from last DFM backtest value (no uncertainty band for CA)
+        p = paths.get("dfm", [])
+        t = paths.get("target", [])
+        if p and t:
+            out["current"] = {"month": t[-1], "point": p[-1], "lo": None, "hi": None}
     return out
 
 
