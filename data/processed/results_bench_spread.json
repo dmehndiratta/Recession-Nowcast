@@ -2,10 +2,10 @@
   "series": "T10Y3M",
   "horizons": {
     "0": {
-      "const": -1.6456213181299386,
-      "spread_coef": 0.17048007209776608,
-      "spread_pvalue": 0.012286915917023635,
-      "pseudo_r2": 0.02073501644929865,
+      "const": -1.645609778574049,
+      "spread_coef": 0.17047109052402756,
+      "spread_pvalue": 0.012293128506066215,
+      "pseudo_r2": 0.02073201397594404,
       "n": 535,
       "in_sample_auc": 0.5988184513428672,
       "inverted_curve_signal": false
