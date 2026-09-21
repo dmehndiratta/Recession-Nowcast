@@ -1,8 +1,8 @@
 {
-  "n_months": 1362,
+  "n_months": 1363,
   "n_series": 23,
   "panel_start": "1913-03",
-  "panel_end": "2026-08",
+  "panel_end": "2026-09",
   "series": [
     "RPI",
     "W875RX1",
