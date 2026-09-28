@@ -7,7 +7,7 @@
     "F2": 0.0586,
     "F3": 0.0313
   },
-  "in_sample_auc": 0.858180626910997,
-  "in_sample_brier": 0.12049878710088952,
+  "in_sample_auc": 0.8582880934057172,
+  "in_sample_brier": 0.12049885750551803,
   "note": "In-sample only; OOS skill is reported by backtest.py."
 }
