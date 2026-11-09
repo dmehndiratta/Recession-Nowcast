@@ -2,21 +2,21 @@
   "n_features": 69,
   "n_selected": 14,
   "top_selected": {
-    "MANEMP_l0": -1.6808,
-    "INDPRO_l0": -0.662,
-    "FEDFUNDS_l0": -0.5651,
-    "FEDFUNDS_l2": -0.549,
+    "MANEMP_l0": -1.6805,
+    "INDPRO_l0": -0.6609,
+    "FEDFUNDS_l0": -0.565,
+    "FEDFUNDS_l2": -0.5489,
     "PERMIT_l0": -0.5251,
-    "BAA_l1": 0.1377,
+    "BAA_l1": 0.138,
     "FEDFUNDS_l1": -0.1344,
-    "CUMFNS_l1": -0.1034,
+    "CUMFNS_l1": -0.1033,
     "INDPRO_l2": -0.0864,
-    "MANEMP_l1": -0.0624,
+    "MANEMP_l1": -0.0627,
     "BAA_l2": 0.0609,
-    "CUMFNS_l0": -0.0585,
-    "W875RX1_l0": -0.0332,
+    "CUMFNS_l0": -0.0598,
+    "W875RX1_l0": -0.0334,
     "CES0600000007_l0": -0.0095
   },
-  "in_sample_auc": 0.8403665784624763,
-  "in_sample_brier": 0.2979333951961618
+  "in_sample_auc": 0.8403596514318172,
+  "in_sample_brier": 0.2979594185698544
 }

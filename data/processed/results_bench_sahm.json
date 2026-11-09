@@ -3,7 +3,7 @@
   "threshold": 0.5,
   "trigger_precision": 0.4011299435028249,
   "trigger_recall": 0.7473684210526316,
-  "trigger_auc": 0.8729312658416579,
-  "n": 801,
+  "trigger_auc": 0.8730961066031415,
+  "n": 802,
   "recession_months": 95
 }
